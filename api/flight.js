@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
 
@@ -33,22 +33,22 @@ export default async function handler(req, res) {
     const f = data.data[0];
     const result = {
       flightNumber: f.flight?.iata || flight.toUpperCase(),
-      airline:      f.airline?.name || '-',
-      status:       translateStatus(f.flight_status),
+      airline: f.airline?.name || '-',
+      status: translateStatus(f.flight_status),
       departure: {
-        airport:   f.departure?.airport || '-',
-        iata:      f.departure?.iata || '-',
+        airport: f.departure?.airport || '-',
+        iata: f.departure?.iata || '-',
         scheduled: formatTime(f.departure?.scheduled),
-        actual:    formatTime(f.departure?.actual),
-        delay:     f.departure?.delay || 0
+        actual: formatTime(f.departure?.actual),
+        delay: f.departure?.delay || 0
       },
       arrival: {
-        airport:   f.arrival?.airport || '-',
-        iata:      f.arrival?.iata || '-',
+        airport: f.arrival?.airport || '-',
+        iata: f.arrival?.iata || '-',
         scheduled: formatTime(f.arrival?.scheduled),
         estimated: formatTime(f.arrival?.estimated),
-        actual:    formatTime(f.arrival?.actual),
-        delay:     f.arrival?.delay || 0
+        actual: formatTime(f.arrival?.actual),
+        delay: f.arrival?.delay || 0
       }
     };
 
